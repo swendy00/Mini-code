@@ -58,5 +58,12 @@ def test1():
         pass
 
 
+# def test2():
+#     print(ord('!'))
+#     for i in range(0, 100):
+#         print(chr(i), end=' ')
+#     print()
+
+
 if __name__ == '__main__':
     test1()
