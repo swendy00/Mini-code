@@ -1,6 +1,21 @@
 import json
+import copy
+
+basic_map = {
+    '0': [],
+    '1': [],
+    '2': ['a', 'b', 'c'],
+    '3': ['d', 'e', 'f'],
+    '4': ['g', 'h', 'i'],
+    '5': ['j', 'k', 'l'],
+    '6': ['m', 'n', 'o'],
+    '7': ['p', 'q', 'r', 's'],
+    '8': ['t', 'u', 'v'],
+    '9': ['w', 'x', 'y', 'z'],
+}
 
 
+# reunite letters
 def reunite(a, b):
     result = []
     if not isinstance(a, list) or not isinstance(b, list):
@@ -11,19 +26,7 @@ def reunite(a, b):
     return result
 
 
-def test1():
-    letter_map = {
-        '0': [],
-        '1': [],
-        '2': ['a', 'b', 'c'],
-        '3': ['d', 'e', 'f'],
-        '4': ['g', 'h', 'i'],
-        '5': ['j', 'k', 'l'],
-        '6': ['m', 'n', 'o'],
-        '7': ['p', 'q', 'r', 's'],
-        '8': ['t', 'u', 'v'],
-        '9': ['w', 'x', 'y', 'z'],
-    }
+def stage1_test(letter_map):
 
     print('good example: [2,3]')
     digits = input("Input: ")
@@ -38,32 +41,38 @@ def test1():
                 return "Error: input error"
         # get action letters
         action_letters = []
-        for i in keys:
-            if str(i) in letter_map.keys() and letter_map[str(i)]:
-                action_letters.append(letter_map[str(i)])
+        for k in keys:
+            if str(k) in letter_map.keys() and letter_map[str(k)]:
+                action_letters.append(letter_map[str(k)])
+
         # reunite action letters
-        result = action_letters[0]
-        for i in range(1, len(action_letters)):
-            result = reunite(result, action_letters[i])
+        if len(action_letters) > 0:
+            result = action_letters[0]
+            for i in range(1, len(action_letters)):
+                result = reunite(result, action_letters[i])
 
-        print("Output: ", end='')
-        for i in result:
-            print(i, end=' ')
-
-        return result
-
-    except Exception as e:
-        print("Input Error : %s ." % e)
+            print("Output: ", end='')
+            for i in result:
+                print(i, end=' ')
+            return result
+        else:
+            print("Output: ", end='')
+    except Exception:
+        print("Input Error : %s ." % "please input a 'list' like the example above, all objects in the list must be an integer")
     finally:
         pass
 
 
-# def test2():
-#     print(ord('!'))
-#     for i in range(0, 100):
-#         print(chr(i), end=' ')
-#     print()
+def stage2_test(letter_map):
+    new_letter_map = copy.deepcopy(letter_map)
+
+    # create a new map, add digits from 10 to 99 to the new map.
+    for i in range(len(basic_map), 100):
+        new_letter_map.setdefault(str(i), [])
+
+    stage1_test(new_letter_map)
 
 
 if __name__ == '__main__':
-    test1()
+    stage1_test(basic_map)
+    # stage2_test(basic_map)
